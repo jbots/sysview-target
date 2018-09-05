@@ -65,7 +65,38 @@ Purpose : Global types etc.
 #define GLOBAL_H
 
 #include <string.h>         // For memset
-#include "types.h"          // Defines standard data types
+//#include "types.h"          // Defines standard data types
+
+// Add macros for data types
+
+#define U8    unsigned char
+#define U16   unsigned short
+#define U32   unsigned long
+#define I8    signed char
+#define I16   signed short
+#define I32   signed long
+
+#ifdef _WIN32
+  //
+  // Microsoft VC6 compiler related
+  //
+  #define U64   unsigned __int64
+  #define U128  unsigned __int128
+  #define I64   __int64
+  #define I128  __int128
+  #if _MSC_VER <= 1200
+    #define U64_C(x) x##UI64
+  #else
+    #define U64_C(x) x##ULL
+  #endif
+#else 
+  //
+  // C99 compliant compiler
+  //
+  #define U64   unsigned long long
+  #define I64   signed long long
+  #define U64_C(x) x##ULL
+#endif
 
 /*********************************************************************
 *
